@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cálculo de Prestaciones Sociales - ADEA 2023-1</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f2;
+    color: #26332b;
+}
+
+header {
+    background: #176b3a;
+    color: white;
+    padding: 28px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+header p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.contenedor {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 18px;
+}
+
+.tarjeta {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+}
+
+.tarjeta h2 {
+    margin-top: 0;
+    color: #176b3a;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5ce;
+    border-radius: 9px;
+    font-size: 16px;
+}
+
+.boton {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #176b3a;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.boton:hover {
+    background: #0f542d;
+}
+
+.resultado-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.resultado {
+    border: 1px solid #dce5de;
+    border-radius: 14px;
+    padding: 20px;
+    background: #f9fbf9;
+}
+
+.resultado h3 {
+    margin-top: 0;
+    color: #176b3a;
+}
+
+.valor {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.fundamento {
+    margin-top: 12px;
+    padding: 14px;
+    background: #eef7f0;
+    border-left: 4px solid #176b3a;
+    border-radius: 7px;
+    line-height: 1.5;
+}
+
+.radio-grupo {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.radio-opcion {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: normal;
+}
+
+.radio-opcion input {
+    width: auto;
+}
+
+.alerta {
+    margin-top: 15px;
+    padding: 13px;
+    border-radius: 8px;
+    background: #fff7df;
+    border-left: 4px solid #d39b00;
+}
+
+.exito {
+    margin-top: 15px;
+    padding: 13px;
+    border-radius: 8px;
+    background: #eaf7ed;
+    border-left: 4px solid #176b3a;
+}
+
+.legal {
+    background: #f5f7f6;
+    padding: 16px;
+    border-radius: 10px;
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+.total {
+    background: #176b3a;
+    color: white;
+    padding: 16px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.total strong {
+    font-size: 22px;
+}
+
+.pequeno {
+    font-size: 13px;
+    color: #66736b;
+}
+
+.oculto {
+    display: none;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.tabla th,
+.tabla td {
+    border: 1px solid #d8e0da;
+    padding: 10px;
+    text-align: left;
+}
+
+.tabla th {
+    background: #eaf2ec;
+}
+
+.formula-principal {
+    background: #ffffff;
+    border: 2px solid #176b3a;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.formula-principal strong {
+    color: #176b3a;
+    font-size: 18px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>CÁLCULO DE PRESTACIONES SOCIALES</h1>
+
+    <p>
+        <strong>ADEA 2023-1 — UNIVERSIDAD DE CALDAS</strong>
+    </p>
+
+    <p>
+        Simulador académico para la liquidación de prestaciones sociales
+    </p>
+
+</header>
+
+
+<div class="contenedor">
+
+
+<!-- =====================================================
+     DATOS DEL TRABAJADOR
+===================================================== -->
+
+<div class="tarjeta">
+
+    <h2>1. Datos del trabajador</h2>
+
+    <div class="grid">
+
+        <div>
+
+            <label for="nombre">
+                Nombre del trabajador
+            </label>
+
+            <input
+                type="text"
+                id="nombre"
+                value="Carlos Pérez"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label for="cargo">
+                Cargo
+            </label>
+
+            <input
+                type="text"
+                id="cargo"
+                value="Operario agrícola"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label for="salario">
+                Salario mensual ($)
+            </label>
+
+            <input
+                type="number"
+                id="salario"
+                value="2000000"
+                min="0"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PRIMA DE SERVICIOS
+===================================================== -->
+
+<div class="tarjeta">
+
+    <h2>2. Prima de servicios</h2>
+
+    <p>
+        Seleccione el período que desea liquidar:
+    </p>
+
+
+    <div class="radio-grupo">
+
+        <label class="radio-opcion">
+
+            <input
+                type="radio"
+                name="periodoPrima"
+                value="primer"
+                checked
+                onchange="actualizarPrima()"
+            >
+
+            Primer semestre — enero a junio
+
+        </label>
+
+
+        <label class="radio-opcion">
+
+            <input
+                type="radio"
+                name="periodoPrima"
+                value="segundo"
+                onchange="actualizarPrima()"
+            >
+
+            Segundo semestre — julio a diciembre
+
+        </label>
+
+    </div>
+
+
+    <div class="grid" style="margin-top:20px;">
+
+
+        <div>
+
+            <label for="diasPrima">
+
+                Días trabajados en el período
+
+            </label>
+
+            <input
+                type="number"
+                id="diasPrima"
+                value="180"
+                min="0"
+                max="180"
+                onchange="actualizarPrima()"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                ¿La primera prima ya fue pagada?
+            </label>
+
+
+            <div class="radio-grupo">
+
+                <label class="radio-opcion">
+
+                    <input
+                        type="radio"
+                        name="primaPagada"
+                        value="si"
+                        checked
+                        onchange="actualizarPrima()"
+                    >
+
+                    Sí
+
+                </label>
+
+
+                <label class="radio-opcion">
+
+                    <input
+                        type="radio"
+                        name="primaPagada"
+                        value="no"
+                        onchange="actualizarPrima()"
+                    >
+
+                    No
+
+                </label>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="informacionPrima"
+        class="legal"
+    ></div>
+
+
+    <button
+        class="boton"
+        onclick="calcularTodo()"
+    >
+
+        CALCULAR PRESTACIONES
+
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     RESULTADOS
+===================================================== -->
+
+<div class="tarjeta">
+
+    <h2>3. Resultado de la liquidación</h2>
+
+
+    <div class="resultado-grid">
+
+
+        <!-- PRIMA -->
+
+        <div class="resultado">
+
+            <h3>
+                Prima de servicios
+            </h3>
+
+
+            <div
+                class="valor"
+                id="resultadoPrima"
+            >
+                $0
+            </div>
+
+
+            <div id="detallePrima"></div>
+
+        </div>
+
+
+        <!-- CESANTIAS -->
+
+        <div class="resultado">
+
+            <h3>
+                Cesantías
+            </h3>
+
+
+            <div
+                class="valor"
+                id="resultadoCesantias"
+            >
+                $0
+            </div>
+
+
+            <div class="fundamento">
+
+                <strong>
+                    Artículo 249 CST
+                </strong>
+
+
+                <p>
+
+                    El trabajador tiene derecho a un auxilio
+                    de cesantía equivalente a un mes de salario
+                    por cada año de servicios, proporcionalmente
+                    por fracción de año.
+
+                </p>
+
+
+                <strong>
+                    Fórmula:
+                </strong>
+
+
+                <p>
+
+                    Salario × días trabajados ÷ 360
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- INTERESES -->
+
+        <div class="resultado">
+
+            <h3>
+                Intereses sobre cesantías
+            </h3>
+
+
+            <div
+                class="valor"
+                id="resultadoIntereses"
+            >
+                $0
+            </div>
+
+
+            <div class="fundamento">
+
+                <strong>
+                    Ley 52 de 1975
+                </strong>
+
+
+                <p>
+
+                    Sobre las cesantías reconocidas al trabajador
+                    se causan intereses a una tasa del 12% anual,
+                    proporcional al tiempo correspondiente.
+
+                </p>
+
+
+                <strong>
+                    Fórmula:
+                </strong>
+
+
+                <p>
+
+                    Cesantías × días × 12% ÷ 360
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- DOTACION -->
+
+        <div class="resultado">
+
+            <h3>
+                Dotación
+            </h3>
+
+
+            <div
+                class="valor"
+                id="resultadoDotacion"
+            >
+                -
+            </div>
+
+
+            <div
+                id="detalleDotacion"
+                class="fundamento"
+            ></div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FUNDAMENTO LEGAL
+===================================================== -->
+
+<div class="tarjeta">
+
+    <h2>
+        4. Fundamento legal de la prima
+    </h2>
+
+
+    <div class="legal">
+
+        <strong>
+            Artículo 306 del Código Sustantivo del Trabajo
+        </strong>
+
+
+        <p>
+
+            La prima de servicios corresponde a treinta (30)
+            días de salario por año, reconocidos en dos pagos:
+            la mitad máximo el 30 de junio y la otra mitad
+            a más tardar dentro de los primeros veinte (20)
+            días de diciembre.
+
+        </p>
+
+
+        <p>
+
+            Cuando el trabajador no ha laborado durante todo
+            el semestre, la prestación se reconoce
+            proporcionalmente al tiempo trabajado.
+
+        </p>
+
+
+        <p>
+
+            La norma también contempla expresamente a los
+            trabajadores de fincas.
+
+        </p>
+
+    </div>
+
+
+    <div class="formula-principal">
+
+        <strong>
+            FÓRMULA GENERAL DE LA PRIMA DE SERVICIOS
+        </strong>
+
+        <p>
+
+            <strong>
+                Prima = (Salario mensual × días trabajados) ÷ 360
+            </strong>
+
+        </p>
+
+        <p class="pequeno">
+
+            Para un semestre completo se toman 180 días.
+            Si el trabajador laboró una fracción del semestre,
+            se calcula proporcionalmente.
+
+        </p>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   DATOS GENERALES
+===================================================== */
+
+const salarioMinimo2026 = 1750905;
+
+const limiteDotacion =
+    salarioMinimo2026 * 2;
+
+
+/* =====================================================
+   ACTUALIZAR INFORMACIÓN DE LA PRIMA
+===================================================== */
+
+function actualizarPrima() {
+
+
+    const periodo =
+        document.querySelector(
+            'input[name="periodoPrima"]:checked'
+        ).value;
+
+
+    const primaPagada =
+        document.querySelector(
+            'input[name="primaPagada"]:checked'
+        ).value;
+
+
+    const informacion =
+        document.getElementById(
+            "informacionPrima"
+        );
+
+
+    const dias =
+        document.getElementById(
+            "diasPrima"
+        );
+
+
+    if (periodo === "primer") {
+
+
+        dias.max = 180;
+
+
+        informacion.innerHTML = `
+
+            <strong>
+                Primer semestre
+            </strong>
+
+
+            <p>
+
+                Período de causación:
+                <strong>
+                    1 de enero al 30 de junio.
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Fecha máxima legal de pago:
+                <strong>
+                    30 de junio.
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Para un semestre completo corresponden
+                180 días de causación.
+
+            </p>
+
+        `;
+
+
+    } else {
+
+
+        dias.max = 180;
+
+
+        informacion.innerHTML = `
+
+            <strong>
+                Segundo semestre
+            </strong>
+
+
+            <p>
+
+                Período de causación:
+                <strong>
+                    1 de julio al 31 de diciembre.
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Fecha máxima legal de pago:
+                <strong>
+                    20 de diciembre.
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                Para un semestre completo corresponden
+                180 días de causación.
+
+            </p>
+
+        `;
+
+
+        if (primaPagada === "no") {
+
+
+            informacion.innerHTML += `
+
+                <div class="alerta">
+
+                    <strong>
+                        Atención:
+                    </strong>
+
+                    La primera prima aparece como
+                    <strong>no pagada</strong>.
+
+                    El simulador incluirá ese valor
+                    pendiente dentro del total de
+                    prima de servicios.
+
+                </div>
+
+            `;
+
+
+        } else {
+
+
+            informacion.innerHTML += `
+
+                <div class="exito">
+
+                    La primera prima aparece como
+                    <strong>pagada</strong>.
+
+                    El cálculo corresponde únicamente
+                    al segundo semestre.
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   CALCULAR TODAS LAS PRESTACIONES
+===================================================== */
+
+function calcularTodo() {
+
+
+    /* DATOS */
+
+    const salario =
+        Number(
+            document.getElementById(
+                "salario"
+            ).value
+        );
+
+
+    const diasPrima =
+        Number(
+            document.getElementById(
+                "diasPrima"
+            ).value
+        );
+
+
+    const periodo =
+        document.querySelector(
+            'input[name="periodoPrima"]:checked'
+        ).value;
+
+
+    const primaPagada =
+        document.querySelector(
+            'input[name="primaPagada"]:checked'
+        ).value;
+
+
+    /* VALIDACIONES */
+
+    if (salario < 0) {
+
+        alert(
+            "El salario no puede ser negativo."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        diasPrima < 0 ||
+        diasPrima > 180
+    ) {
+
+        alert(
+            "Los días de la prima deben estar entre 0 y 180."
+        );
+
+        return;
+
+    }
+
+
+    /* =================================================
+       PRIMA DE SERVICIOS
+    ================================================= */
+
+
+    let primaPrimerSemestre = 0;
+
+    let primaSegundoSemestre = 0;
+
+    let primaTotal = 0;
+
+
+    /* PRIMER SEMESTRE */
+
+    if (
+        periodo === "primer"
+    ) {
+
+
+        primaPrimerSemestre =
+            salario *
+            diasPrima /
+            360;
+
+
+        primaTotal =
+            primaPrimerSemestre;
+
+
+    }
+
+
+    /* SEGUNDO SEMESTRE */
+
+    else {
+
+
+        primaSegundoSemestre =
+            salario *
+            diasPrima /
+            360;
+
+
+        /*
+        SI LA PRIMERA PRIMA NO FUE PAGADA,
+        SE SUMA EL PRIMER SEMESTRE COMPLETO.
+        */
+
+        if (
+            primaPagada === "no"
+        ) {
+
+
+            primaPrimerSemestre =
+                salario *
+                180 /
+                360;
+
+
+            primaTotal =
+                primaPrimerSemestre +
+                primaSegundoSemestre;
+
+
+        }
+
+
+        /*
+        SI YA FUE PAGADA,
+        SOLO SE MUESTRA EL SEGUNDO SEMESTRE.
+        */
+
+        else {
+
+
+            primaTotal =
+                primaSegundoSemestre;
+
+        }
+
+    }
+
+
+    /* MOSTRAR TOTAL DE PRIMA */
+
+    document.getElementById(
+        "resultadoPrima"
+    ).textContent =
+        formatoPesos(
+            primaTotal
+        );
+
+
+    /* =================================================
+       DETALLE Y FÓRMULA DE LA PRIMA
+    ================================================= */
+
+    let detallePrimaHTML = "";
+
+
+    /*
+    PRIMER SEMESTRE
+    */
+
+    if (
+        periodo === "primer"
+    ) {
+
+
+        detallePrimaHTML = `
+
+            <p>
+
+                <strong>
+                    Período:
+                </strong>
+
+                Primer semestre
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Días trabajados:
+                </strong>
+
+                ${diasPrima}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Fecha máxima de pago:
+                </strong>
+
+                30 de junio
+
+            </p>
+
+
+            <div class="formula-principal">
+
+                <strong>
+                    FÓRMULA
+                </strong>
+
+                <p>
+
+                    Prima =
+                    (Salario mensual × días trabajados)
+                    ÷ 360
+
+                </p>
+
+
+                <p>
+
+                    (${formatoPesos(salario)}
+                    × ${diasPrima})
+                    ÷ 360
+
+                </p>
+
+
+                <p>
+
+                    =
+                    <strong>
+                        ${formatoPesos(
+                            primaPrimerSemestre
+                        )}
+                    </strong>
+
+                </p>
+
+            </div>
+
+        `;
+
+
+    }
+
+
+    /*
+    SEGUNDO SEMESTRE
+    */
+
+    else {
+
+
+        detallePrimaHTML = `
+
+            <p>
+
+                <strong>
+                    Segundo semestre:
+                </strong>
+
+                ${formatoPesos(
+                    primaSegundoSemestre
+                )}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Días segundo semestre:
+                </strong>
+
+                ${diasPrima}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Fecha máxima de pago:
+                </strong>
+
+                20 de diciembre
+
+            </p>
+
+
+            <div class="formula-principal">
+
+                <strong>
+                    FÓRMULA DEL SEGUNDO SEMESTRE
+                </strong>
+
+                <p>
+
+                    Prima =
+                    (Salario mensual × días trabajados)
+                    ÷ 360
+
+                </p>
+
+
+                <p>
+
+                    (${formatoPesos(salario)}
+                    × ${diasPrima})
+                    ÷ 360
+
+                </p>
+
+
+                <p>
+
+                    =
+                    <strong>
+                        ${formatoPesos(
+                            primaSegundoSemestre
+                        )}
+                    </strong>
+
+                </p>
+
+            </div>
+
+        `;
+
+
+        /*
+        SI LA PRIMERA PRIMA NO FUE PAGADA
+        */
+
+        if (
+            primaPagada === "no"
+        ) {
+
+
+            detallePrimaHTML += `
+
+                <table class="tabla">
+
+                    <tr>
+
+                        <th>
+                            Concepto
+                        </th>
+
+                        <th>
+                            Valor
+                        </th>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Primera prima pendiente
+                        </td>
+
+                        <td>
+                            ${formatoPesos(
+                                primaPrimerSemestre
+                            )}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Segunda prima
+                        </td>
+
+                        <td>
+                            ${formatoPesos(
+                                primaSegundoSemestre
+                            )}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            TOTAL PENDIENTE
+                        </th>
+
+                        <th>
+                            ${formatoPesos(
+                                primaTotal
+                            )}
+                        </th>
+
+                    </tr>
+
+                </table>
+
+
+                <div class="formula-principal">
+
+                    <strong>
+                        CÁLCULO TOTAL PENDIENTE
+                    </strong>
+
+
+                    <p>
+
+                        Primera prima pendiente
+                        +
+                        Segunda prima
+
+                    </p>
+
+
+                    <p>
+
+                        ${formatoPesos(
+                            primaPrimerSemestre
+                        )}
+
+                        +
+
+                        ${formatoPesos(
+                            primaSegundoSemestre
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        =
+
+                        <strong>
+                            ${formatoPesos(
+                                primaTotal
+                            )}
+                        </strong>
+
+                    </p>
+
+                </div>
+
+
+                <div class="alerta">
+
+                    <strong>
+                        Alerta:
+                    </strong>
+
+                    La primera prima no aparece
+                    como pagada.
+
+                    Por eso el simulador suma
+                    ambos períodos para mostrar
+                    el valor total pendiente.
+
+                </div>
+
+            `;
+
+
+        }
+
+
+        /*
+        SI LA PRIMERA PRIMA YA FUE PAGADA
+        */
+
+        else {
+
+
+            detallePrimaHTML += `
+
+                <div class="exito">
+
+                    La primera prima ya fue pagada.
+
+                    Por lo tanto, el resultado corresponde
+                    únicamente al segundo semestre.
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "detallePrima"
+    ).innerHTML =
+        detallePrimaHTML;
+
+
+    /* =================================================
+       CESANTÍAS
+    ================================================= */
+
+
+    const cesantias =
+        salario *
+        diasPrima /
+        360;
+
+
+    document.getElementById(
+        "resultadoCesantias"
+    ).textContent =
+        formatoPesos(
+            cesantias
+        );
+
+
+    /* =================================================
+       INTERESES SOBRE CESANTÍAS
+    ================================================= */
+
+
+    const intereses =
+        cesantias *
+        diasPrima *
+        0.12 /
+        360;
+
+
+    document.getElementById(
+        "resultadoIntereses"
+    ).textContent =
+        formatoPesos(
+            intereses
+        );
+
+
+    /* =================================================
+       DOTACIÓN
+    ================================================= */
+
+
+    const resultadoDotacion =
+        document.getElementById(
+            "resultadoDotacion"
+        );
+
+
+    const detalleDotacion =
+        document.getElementById(
+            "detalleDotacion"
+        );
+
+
+    if (
+        salario < limiteDotacion &&
+        diasPrima >= 90
+    ) {
+
+
+        resultadoDotacion.textContent =
+            "APLICA";
+
+
+        detalleDotacion.innerHTML = `
+
+            <strong>
+                La dotación aplica.
+            </strong>
+
+
+            <p>
+
+                Para esta simulación,
+                el trabajador cumple el criterio
+                de remuneración inferior a dos
+                salarios mínimos y el requisito
+                de tiempo de servicio.
+
+            </p>
+
+
+            <p>
+
+                Límite utilizado para 2026:
+
+                <strong>
+                    ${formatoPesos(
+                        limiteDotacion
+                    )}
+                </strong>
+
+            </p>
+
+
+            <p>
+
+                La dotación se entrega en especie
+                (calzado y vestido de labor),
+                no como un porcentaje del salario.
+
+            </p>
+
+        `;
+
+
+    }
+
+
+    else {
+
+
+        resultadoDotacion.textContent =
+            "NO APLICA";
+
+
+        detalleDotacion.innerHTML = `
+
+            <strong>
+                La dotación no aplica bajo los
+                criterios utilizados en esta simulación.
+            </strong>
+
+
+            <p>
+
+                Se requiere una remuneración inferior
+                a dos salarios mínimos y el cumplimiento
+                del requisito de tiempo de servicio.
+
+            </p>
+
+
+            <p>
+
+                Límite de referencia para 2026:
+
+                <strong>
+                    ${formatoPesos(
+                        limiteDotacion
+                    )}
+                </strong>
+
+            </p>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   FORMATO DE PESOS COLOMBIANOS
+===================================================== */
+
+function formatoPesos(valor) {
+
+    return new Intl.NumberFormat(
+        "es-CO",
+        {
+            style: "currency",
+            currency: "COP",
+            maximumFractionDigits: 0
+        }
+    ).format(valor);
+
+}
+
+
+/* =====================================================
+   INICIAR SIMULADOR
+===================================================== */
+
+actualizarPrima();
+
+calcularTodo();
+
+</script>
+
+
+</body>
+
+</html>
